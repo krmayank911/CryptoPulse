@@ -33,7 +33,7 @@ import `in`.crypto.core_designsystem.theme.Radius
 import `in`.crypto.core_designsystem.tokens.CPThemeDark
 import `in`.crypto.feature_dashboard.actions.DashboardAction
 import `in`.crypto.feature_dashboard.presentation.DashboardViewModel
-import `in`.crypto.feature_dashboard.`source-fake`.FakeDashboardFeed
+import `in`.crypto.feature_dashboard.source_fake.FakeDashboardFeed
 import `in`.crypto.feature_dashboard.state.DashboardUiState
 import `in`.crypto.shared_ui.components.CoinCard
 import `in`.crypto.shared_ui.components.PortfolioHeader
@@ -84,7 +84,10 @@ fun DashboardScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp, alignment = Alignment.CenterVertically),
                 horizontalArrangement = Arrangement.Absolute.SpaceAround
             ) {
-                items(holdings) { model ->
+                items(
+                    items = holdings,
+                    key = { it.id }
+                ) { model ->
                     val (accentTextColor, accentBackgroundColor, accentBorderColor) = when (model.state) {
                         CryptoState.PROFIT -> Triple(theme.gainColor, theme.gainBackground, theme.borderColorGain)
                         CryptoState.LOSS -> Triple(theme.lossColor, theme.lossBackground, theme.borderColorLoss)

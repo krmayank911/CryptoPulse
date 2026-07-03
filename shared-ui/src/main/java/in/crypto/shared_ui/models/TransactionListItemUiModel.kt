@@ -1,10 +1,12 @@
 package `in`.crypto.shared_ui.models
 
+import androidx.compose.runtime.Immutable
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
+@Immutable
 data class TransactionListItemUiModel(
     val id: String = "",
     val icon: String? = null,

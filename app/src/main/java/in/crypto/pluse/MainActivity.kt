@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,7 +17,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import `in`.crypto.core_designsystem.tokens.CPThemeDark
 import `in`.crypto.feature_dashboard.presentation.DashboardViewModel
 import `in`.crypto.feature_dashboard.screen.DashboardScreen
-import `in`.crypto.feature_dashboard.`source-fake`.FakeDashboardFeed
+import `in`.crypto.feature_dashboard.source_fake.FakeDashboardFeed
 import `in`.crypto.pluse.ui.theme.CryptoPluseTheme
 
 class MainActivity : ComponentActivity() {

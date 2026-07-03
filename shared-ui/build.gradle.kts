@@ -46,6 +46,7 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.material3)
     debugImplementation(libs.androidx.ui.tooling)
+    implementation(libs.kotlin.collection)
 
     implementation(project(":core-ui"))
     implementation(project(":core-model"))

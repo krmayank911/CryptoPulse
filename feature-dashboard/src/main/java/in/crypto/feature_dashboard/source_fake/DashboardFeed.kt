@@ -1,4 +1,4 @@
-package `in`.crypto.feature_dashboard.`source-fake`
+package `in`.crypto.feature_dashboard.source_fake
 
 import `in`.crypto.feature_dashboard.state.DashboardUiState
 import kotlinx.coroutines.flow.Flow
