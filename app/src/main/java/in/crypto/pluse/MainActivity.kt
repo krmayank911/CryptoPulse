@@ -1,6 +1,7 @@
 package `in`.crypto.pluse
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -30,6 +31,11 @@ class MainActivity : ComponentActivity() {
 
                     val viewModel: DashboardViewModel = remember {  DashboardViewModel(FakeDashboardFeed()) }
                     val state by viewModel.uiStateFlow.collectAsStateWithLifecycle()
+
+                    Log.d(
+                        "CPulse",
+                        "Collected portfolio = ${state.portfolioUiModel?.value}"
+                    )
 
                     DashboardScreen(
                         modifier = Modifier.fillMaxSize()

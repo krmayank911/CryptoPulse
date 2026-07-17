@@ -1,6 +1,6 @@
 package `in`.crypto.core_model.helper
 
-import `in`.crypto.core_model.Coin
+import `in`.crypto.core_model.coin.Coin
 import `in`.crypto.core_model.CurrencyCode
 import `in`.crypto.core_model.Holding
 import `in`.crypto.core_model.Money
@@ -21,6 +21,7 @@ object PositionGenerator {
         return Position(
             coin = coin,
             holding = holding,
+            investedAmount = Money(invested, CurrencyCode.USD),
             currentValue = Money(currentValue, CurrencyCode.USD),
             pnl = Money(pnl, CurrencyCode.USD),
             pnlPercentage = pnlPercentage

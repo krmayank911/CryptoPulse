@@ -31,6 +31,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import `in`.crypto.core_designsystem.components.CPTitleText
 import `in`.crypto.core_designsystem.theme.Radius
 import `in`.crypto.core_designsystem.tokens.CPThemeDark
+import `in`.crypto.core_ui.components.LogCompositions
 import `in`.crypto.feature_dashboard.actions.DashboardAction
 import `in`.crypto.feature_dashboard.presentation.DashboardViewModel
 import `in`.crypto.feature_dashboard.source_fake.FakeDashboardFeed
@@ -49,12 +50,14 @@ fun DashboardScreen(
     theme: CPThemeDark = CPThemeDark,
     actions: (DashboardAction) -> Unit = {},
 ) {
-
     Column(
         modifier = modifier
     ) {
-
-        Spacer(modifier = Modifier.fillMaxWidth().height(16.dp))
+        LogCompositions("DashboardScreen")
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(16.dp)
+        )
 
         val portfolioUiModel = dashboardUiState.portfolioUiModel
         if (portfolioUiModel != null) {
@@ -140,7 +143,8 @@ fun DashboardScreen(
             ) {
                 items(transactions) { model ->
                     TransactionListItem(
-                        modifier = Modifier.padding(top = 16.dp)
+                        modifier = Modifier
+                            .padding(top = 16.dp)
                             .clickable {
                                 actions(DashboardAction.TransactionClick(model.id))
                             },
@@ -158,7 +162,7 @@ fun DashboardScreen(
 @Composable
 fun DashboardScreenPreview() {
 
-    val viewModel: DashboardViewModel = DashboardViewModel(FakeDashboardFeed())
+    val viewModel = DashboardViewModel(FakeDashboardFeed())
     val state by viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
     DashboardScreen(

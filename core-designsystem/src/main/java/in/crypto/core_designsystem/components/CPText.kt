@@ -113,10 +113,12 @@ fun CPLabelText(
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFF0A0D14)
 fun CPCaptionText(
+    modifier: Modifier = Modifier,
     text: String = "Today · 8:14 AM",
     color: Color = Color.White
 ) {
     Text(
+        modifier = modifier,
         text = text,
         style = CryptoTypography.bodySmall,
         color = color

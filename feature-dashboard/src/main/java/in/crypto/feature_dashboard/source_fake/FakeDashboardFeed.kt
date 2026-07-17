@@ -1,21 +1,20 @@
 package `in`.crypto.feature_dashboard.source_fake
 
-import `in`.crypto.core_model.Coin
+import `in`.crypto.core_model.coin.Coin
 import `in`.crypto.core_model.Holding
-import `in`.crypto.core_model.helper.PositionGenerator.buildPosition
-import `in`.crypto.fake.portfolio.getMyPortfolio
+import `in`.crypto.core_model.Transaction
+import `in`.crypto.core_model.coin.CoinId
+import `in`.crypto.core_model.market.PortfolioData
 import `in`.crypto.fake.coins.getCoins
-import `in`.crypto.fake.coins.updateMarket
+import `in`.crypto.fake.coins.updateCoins
 import `in`.crypto.fake.holdings.getMyHoldings
-import `in`.crypto.fake.transactions.transactions
-import `in`.crypto.feature_dashboard.state.DashboardUiState
-import `in`.crypto.shared_ui.mappers.toCoinCardUiModel
-import `in`.crypto.shared_ui.mappers.toPortfolioUiModel
-import `in`.crypto.shared_ui.mappers.toTransactionListItemUiModel
-import `in`.crypto.shared_ui.models.CoinCardUiModel
-import `in`.crypto.shared_ui.models.TransactionListItemUiModel
+import `in`.crypto.fake.transactions.getMyTransactions
 import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentMapOf
+import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -23,35 +22,41 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.isActive
 
 class FakeDashboardFeed: DashboardFeed {
-    override fun observe(): Flow<DashboardUiState> {
+
+    private var coins: PersistentMap<CoinId, Coin> = persistentMapOf()
+    private var holdings: PersistentList<Holding> = persistentListOf()
+    private var transactions: PersistentList<Transaction> = persistentListOf()
+
+    init {
+        coins = getCoins().associateBy { it.id }.toPersistentMap()
+        holdings = getMyHoldings().toPersistentList()
+        transactions = getMyTransactions().toPersistentList()
+    }
+
+
+    override fun observe(): Flow<PortfolioData> {
         return flow {
 
-            var market = getCoins().associateBy { it.id }
+            emit(
+                PortfolioData(
+                    coins = coins,
+                    holdings = holdings,
+                    transactions = transactions
+                )
+            )
 
             while (currentCoroutineContext().isActive) {
-                market = updateMarket(market)
-                val portfolioUiModel = getMyPortfolio().toPortfolioUiModel(market)
-                val positions = getPositions(market, getMyHoldings())
-                val transactions = transactions.map { it.toTransactionListItemUiModel() } as? PersistentList<TransactionListItemUiModel>
-
+                coins = updateCoins(coins)
                 emit(
-                    DashboardUiState(
-                        isLoading = false,
-                        isMarketOpen = true,
-                        portfolioUiModel = portfolioUiModel,
-                        holdings = positions ?: persistentListOf(),
-                        transactions = transactions ?: persistentListOf(),
+                    PortfolioData(
+                        coins = coins,
+                        holdings = holdings,
+                        transactions = transactions
                     )
                 )
-                delay(5000)
+                delay(1000)
             }
         }
     }
-}
-
-fun getPositions(market: Map<String, Coin>, holdings: List<Holding>): PersistentList<CoinCardUiModel>? {
-    return holdings.map {
-        buildPosition(it, market[it.coinId]!!).toCoinCardUiModel()
-    } as? PersistentList<CoinCardUiModel>
 }
 

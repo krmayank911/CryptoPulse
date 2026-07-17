@@ -61,4 +61,6 @@ dependencies {
     implementation(project(":feature-dashboard"))
     implementation(project(":core-designsystem"))
     implementation(project(":core-ui"))
+    implementation(project(":core-model"))
+    implementation(project(":shared-ui"))
 }

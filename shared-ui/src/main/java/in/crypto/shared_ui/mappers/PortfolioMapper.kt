@@ -1,17 +1,13 @@
 package `in`.crypto.shared_ui.mappers
 
-import `in`.crypto.core_model.Coin
-import `in`.crypto.core_model.portfolio.Portfolio
-import `in`.crypto.core_model.helper.PortfolioCalculator
+import `in`.crypto.core_model.portfolio.PortfolioMetrics
 import `in`.crypto.shared_ui.models.CryptoState
 import `in`.crypto.shared_ui.models.PortfolioUiModel
 
-fun Portfolio.toPortfolioUiModel(market: Map<String, Coin>): PortfolioUiModel {
+fun PortfolioMetrics.toPortfolioUiModel(): PortfolioUiModel {
 
-    val portfolioMetrics = PortfolioCalculator.calculate(this, market)
-
-    val investedAmount = portfolioMetrics.investedAmount
-    val currentValue = portfolioMetrics.currentValue
+    val investedAmount = investedAmount
+    val currentValue = currentValue
 
     val cryptoState = when {
         currentValue.amount > investedAmount.amount -> CryptoState.PROFIT
@@ -33,7 +29,7 @@ fun Portfolio.toPortfolioUiModel(market: Map<String, Coin>): PortfolioUiModel {
         else -> changeAmount.getValue()
     }
 
-    val percentageChange = String.format("%.2f", portfolioMetrics.pnlPercentage)
+    val percentageChange = String.format("%.2f", pnlPercentage)
     val percentageChangeText = "$percentageChange%"
 
     return PortfolioUiModel(

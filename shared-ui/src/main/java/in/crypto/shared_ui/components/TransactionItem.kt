@@ -20,6 +20,7 @@ import `in`.crypto.core_designsystem.components.CPHeadlineText
 import `in`.crypto.core_designsystem.components.CPSymbolText
 import `in`.crypto.core_designsystem.tokens.CPTheme
 import `in`.crypto.core_designsystem.tokens.CPThemeDark
+import `in`.crypto.core_ui.components.LogCompositions
 import `in`.crypto.fake.transactions.transaction1
 import `in`.crypto.shared_ui.mappers.toTransactionListItemUiModel
 import `in`.crypto.shared_ui.models.TransactionListItemUiModel
@@ -69,6 +70,7 @@ fun TransactionListItem(
                 color = theme.textColorSecondary
             )
         }
+        LogCompositions("Transaction ${transaction.id} ")
         Column(
             modifier = Modifier.weight(1f),
             horizontalAlignment = Alignment.End

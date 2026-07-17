@@ -3,13 +3,14 @@ package `in`.crypto.fake.holdings
 import `in`.crypto.core_model.CurrencyCode
 import `in`.crypto.core_model.Holding
 import `in`.crypto.core_model.Money
+import `in`.crypto.core_model.coin.CoinId
 import `in`.crypto.fake.holdings.FakeHoldings.btcHolding
 import `in`.crypto.fake.holdings.FakeHoldings.ethHolding
 import java.math.BigDecimal
 
 object FakeHoldings {
     val btcHolding = Holding(
-        coinId = "btc",
+        coinId = CoinId("btc"),
         quantity = BigDecimal(0.75),
         averageBuyPrice = Money(
             BigDecimal(94000),
@@ -17,7 +18,7 @@ object FakeHoldings {
         )
     )
     val ethHolding = Holding(
-        coinId = "eth",
+        coinId = CoinId("eth"),
         quantity = BigDecimal(2.5),
         averageBuyPrice = Money(
             BigDecimal(2200),

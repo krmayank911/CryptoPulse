@@ -24,11 +24,16 @@ import `in`.crypto.core_designsystem.components.CPDisplayText
 import `in`.crypto.core_designsystem.components.CPLabelText
 import `in`.crypto.core_designsystem.tokens.CPTheme
 import `in`.crypto.core_designsystem.tokens.CPThemeDark
+import `in`.crypto.core_model.CurrencyCode
+import `in`.crypto.core_model.Money
+import `in`.crypto.core_model.portfolio.PortfolioMetrics
+import `in`.crypto.core_ui.components.LogCompositions
 import `in`.crypto.fake.coins.getMarket
 import `in`.crypto.fake.portfolio.getMyPortfolio
 import `in`.crypto.shared_ui.mappers.toPortfolioUiModel
 import `in`.crypto.shared_ui.models.CryptoState
 import `in`.crypto.shared_ui.models.PortfolioUiModel
+import java.math.BigDecimal
 
 @Composable
 fun PortfolioHeader(
@@ -116,6 +121,7 @@ fun PortfolioHeader(
                 )
             }
         }
+        LogCompositions("Portfolio")
     }
 }
 
@@ -128,7 +134,12 @@ fun PortfolioHeaderPreview() {
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(horizontal = 16.dp, 16.dp),
-        portfolioUiModel = getMyPortfolio().toPortfolioUiModel(getMarket()),
+        portfolioUiModel = PortfolioMetrics(
+            investedAmount = Money(BigDecimal(1000), CurrencyCode.USD),
+            currentValue = Money(BigDecimal(1200), CurrencyCode.USD),
+            pnl = Money(BigDecimal(200), CurrencyCode.USD),
+            pnlPercentage = 20.0f
+        ).toPortfolioUiModel(),
         theme = CPThemeDark
     )
 

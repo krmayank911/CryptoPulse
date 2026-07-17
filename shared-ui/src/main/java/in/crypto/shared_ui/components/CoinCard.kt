@@ -27,6 +27,7 @@ import `in`.crypto.core_designsystem.theme.Radius
 import `in`.crypto.core_designsystem.tokens.CPTheme
 import `in`.crypto.core_designsystem.tokens.CPThemeDark
 import `in`.crypto.core_model.helper.PositionGenerator.buildPosition
+import `in`.crypto.core_ui.components.LogCompositions
 import `in`.crypto.fake.coins.getCoinById
 import `in`.crypto.fake.holdings.FakeHoldings
 import `in`.crypto.shared_ui.mappers.toCoinCardUiModel
@@ -99,6 +100,7 @@ fun CoinCard(
             text = cardUiModel.changeText.orEmpty(),
             color = accentTextColor
         )
+        LogCompositions("CoinCard ${cardUiModel.id}")
     }
 }
 
@@ -109,7 +111,7 @@ fun CoinCardPreview(
 ) {
 
     val holding = FakeHoldings.btcHolding
-    val cardUiModel: CoinCardUiModel = buildPosition(holding, getCoinById(holding.coinId)).toCoinCardUiModel(true)
+    val cardUiModel: CoinCardUiModel = buildPosition(holding, getCoinById(holding.coinId.value)).toCoinCardUiModel(true)
 
     val (accentTextColor, accentBackgroundColor, accentBorderColor) = when (cardUiModel.state) {
         CryptoState.PROFIT -> Triple(theme.gainColor, theme.gainBackground, theme.borderColorGain)

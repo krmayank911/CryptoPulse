@@ -1,6 +1,6 @@
 package `in`.crypto.core_model.helper
 
-import `in`.crypto.core_model.Coin
+import `in`.crypto.core_model.coin.Coin
 import `in`.crypto.core_model.Money
 import `in`.crypto.core_model.portfolio.Portfolio
 import `in`.crypto.core_model.portfolio.PortfolioMetrics
@@ -19,7 +19,7 @@ object PortfolioCalculator {
 
         portfolio.holdings.forEach { holding ->
 
-            val coin = market[holding.coinId]
+            val coin = market[holding.coinId.value]
             if (coin != null) {
                 investedAmount += holding.averageBuyPrice * holding.quantity
                 currentValue += coin.currentPrice * holding.quantity

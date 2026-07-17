@@ -3,6 +3,7 @@ package `in`.crypto.shared_ui.mappers
 import `in`.crypto.core_model.Position
 import `in`.crypto.shared_ui.models.CryptoState
 import `in`.crypto.shared_ui.models.CoinCardUiModel
+import kotlinx.collections.immutable.toPersistentList
 import java.math.BigDecimal
 
 fun Position.toCoinCardUiModel(showPercentageChange: Boolean = false): CoinCardUiModel {
@@ -26,11 +27,11 @@ fun Position.toCoinCardUiModel(showPercentageChange: Boolean = false): CoinCardU
     }
 
     return CoinCardUiModel(
-        id = coin.id,
+        id = coin.id.value,
         icon = coin.icon,
         symbol = coin.symbol,
         currentPrice = currentValue.getValue(),
-        priceHistory = coin.priceHistory,
+        priceHistory = coin.priceHistory.toPersistentList(),
         state = state,
         changeText = changeText
     )
