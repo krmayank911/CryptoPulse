@@ -51,4 +51,5 @@ dependencies {
     implementation(project(":core-ui"))
     implementation(project(":core-model"))
     implementation(project(":fake"))
+    implementation(project(":compose-charts"))
 }

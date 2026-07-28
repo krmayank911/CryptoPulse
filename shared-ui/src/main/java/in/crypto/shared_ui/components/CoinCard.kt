@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -33,6 +34,8 @@ import `in`.crypto.fake.holdings.FakeHoldings
 import `in`.crypto.shared_ui.mappers.toCoinCardUiModel
 import `in`.crypto.shared_ui.models.CryptoState
 import `in`.crypto.shared_ui.models.CoinCardUiModel
+import `in`.go.charts.chart.LineChart
+import `in`.go.charts.model.ChartStyle
 
 @Composable
 fun CoinCard(
@@ -89,10 +92,20 @@ fun CoinCard(
             Modifier.height(36.dp)
                 .fillMaxWidth()
                 .background(
-                    color = accentBackgroundColor,
+                    color = Color.Transparent,
                     shape = RoundedCornerShape(8.dp)
-                )
-        )
+                ),
+
+        ) {
+            LineChart(
+                modifier = Modifier.fillMaxSize(),
+                values = cardUiModel.priceHistory?.map { it.amount } ?: emptyList(),
+                chartStyle = ChartStyle.defaultStyle().copy(
+                    strokeWidth = 0.5.dp,
+                    lineColor = accentTextColor
+                ),
+            )
+        }
         // space
         Spacer(modifier = Modifier.size(4.dp))
         // status
